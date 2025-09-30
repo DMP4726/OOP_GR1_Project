@@ -35,6 +35,8 @@ public class main extends ApplicationAdapter {
     private Texture background;
     private Texture ball;
 
+    private Bar bar;
+
 
     @Override
     public void create() {
@@ -52,6 +54,9 @@ public class main extends ApplicationAdapter {
         
         background = new Texture("background.jpg");
         ball = new Texture("ball.png");
+
+        bar = new Bar(WORLD_W / 2f - 100, 50, 200, 20); // thanh đỡ ở giữa, gần đáy
+
     }
 
     @Override
@@ -70,6 +75,8 @@ public class main extends ApplicationAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)  || Gdx.input.isKeyPressed(Input.Keys.S)) dy -= 1;
         if (Gdx.input.isKeyPressed(Input.Keys.UP)    || Gdx.input.isKeyPressed(Input.Keys.W)) dy += 1;
 
+        
+
         // Chuẩn hóa vector để không nhanh hơn khi di chuyển chéo
         if (dx != 0 || dy != 0) {
             float len = (float)Math.sqrt(dx*dx + dy*dy); // độ dài vector
@@ -79,6 +86,7 @@ public class main extends ApplicationAdapter {
         }
 
         // Giữ bóng trong giới hạn màn hình
+        bar.update(dt, Gdx.input.isKeyPressed(Input.Keys.LEFT), Gdx.input.isKeyPressed(Input.Keys.RIGHT));
         x = MathUtils.clamp(x, RADIUS, WORLD_W - RADIUS);
         y = MathUtils.clamp(y, RADIUS, WORLD_H - RADIUS);
     }
@@ -92,10 +100,13 @@ public class main extends ApplicationAdapter {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        
+
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
         batch.draw(background, 0, 0, WORLD_W, WORLD_H);
         batch.draw(ball, (int)(x - RADIUS / 2), (int)(y - RADIUS / 2), RADIUS, RADIUS);
+        bar.render(batch);
         batch.end();
     }
 
@@ -104,5 +115,6 @@ public class main extends ApplicationAdapter {
         // Giải phóng bộ nhớ ShapeRenderer
         shapes.dispose();
         batch.dispose();
+        bar.dispose();
     }
 }
