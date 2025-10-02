@@ -59,6 +59,7 @@ public class main extends ApplicationAdapter {
 
         batch = new SpriteBatch();
 
+         shapes = new ShapeRenderer();
         background = new Texture("background.jpg");
         ball = new Texture("ball.png");
 
@@ -125,11 +126,11 @@ public class main extends ApplicationAdapter {
 >>>>>>> 41a7845ffecd0dcce0c0c43cce119db842c10655
         batch.end();
     }
-
+//
     @Override
     public void dispose() {
         // Giải phóng bộ nhớ ShapeRenderer
-        shapes.dispose();
+       shapes.dispose();
         batch.dispose();
         bar.dispose();
     }
