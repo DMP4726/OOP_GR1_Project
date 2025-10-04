@@ -35,7 +35,7 @@ public class Bar {
     //public void create() {
     //}
 
-    // Thanh ngang di chuyển
+    // Thanh di chuyển
 
     //public void Move() {
 
